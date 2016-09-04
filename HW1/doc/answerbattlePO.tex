@@ -1,0 +1,44 @@
+\documentclass[class=minimal,border=0pt]{standalone}
+
+\usepackage{tudfonts}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{matrix}
+\usetikzlibrary{positioning}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+\matrix[matrix of math nodes,every odd row/.style={align=right},every even row/.style={align=left},every node/.style={text width=1.5cm},row sep=0.2cm,column sep =0.2cm] (m) {
+$4$&$3$\\
+$6$&$2$\\
+$2$&$6$\\
+$0$&$4$\\
+};
+\draw (m.north east) rectangle (m.south west);
+\draw (m.north) -- (m.south);
+\draw (m.east) -- (m.west);
+\draw[color=magenta!60] (m.north) rectangle (m.west);
+%\draw[color=green!60] (m.south) rectangle (m.west);
+%\draw[color=green!60] (m.north) rectangle (m.east);
+\draw[color=magenta!60] (m.south) rectangle (m.east);
+
+\coordinate (a) at ($(m.north west)!0.25!(m.north east)$);
+\coordinate (b) at ($(m.north west)!0.75!(m.north east)$);
+\node[above=5pt of a,anchor=base] {Mb};
+\node[above=5pt of b,anchor=base] {Ck};
+
+\coordinate (c) at ($(m.north west)!0.25!(m.south west)$);
+\coordinate (d) at ($(m.north west)!0.75!(m.south west)$);
+\node[left=2pt of c,text width=.5cm]  {Mb};
+\node[left=2pt of d,text width=.5cm]  {Ck};
+
+\node[above=13pt of m.north] (firm b) {Herke};
+\node[left=1.1cm of m.west,rotate=90,align=center,anchor=center] {Chris};
+
+\node[above=2pt of firm b]  {Pay-Off Table};
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,98 @@
+%=========================================================
+
+% Here you can choose if compile with or without solutions.
+% However, this definition is ignored if you use any
+% command from the `Makefile`.
+\providecommand{\withSol}{\iftrue}
+
+%=========================================================
+
+\documentclass
+[twoside,english,colorbacktitle,accentcolor=tud4c,10pt]
+{tudexercise}
+
+%\PassOptionsToPackage{usenames,dvipsnames,svgnames,table}{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{setspace}
+%\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{units}
+\usepackage{subfigure}
+ \usepackage{color}
+% \usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{fancyref}
+\usepackage[english]{babel}
+\usepackage{datetime}
+\usepackage{wasysym}
+\usepackage{footmisc}
+\usepackage{parskip}
+
+\usepackage[normalem]{ulem}
+\usepackage{rotating}
+%=========================================================
+
+
+%=========================================================
+
+\def\homework{3}
+\def\homeworkVer{1}
+\def\homeworkSolVer{1}
+
+
+%=========================================================
+
+\ifcsname withSol\endcsname\else
+\expandafter\let\csname withSol\expandafter\endcsname
+\csname iffalse\endcsname
+\fi
+
+\withSol
+\usepackage[solutions]{iasHomework}
+\else
+\usepackage{iasHomework}
+\fi
+
+%=========================================================
+
+\newdate{deadline}{17}{06}{2016}
+
+\definecolor{azure}{HTML}{007FFF}
+\definecolor{LimeGreen}{RGB}{141, 199, 62}
+\definecolor{CornflowerBlue}{RGB}{65, 176, 228}
+
+%=========================================================
+
+
+%=========================================================
+
+\hwtitle{Intelligent Multi Agent Systems}
+{Summer Semester 2016}
+{G. Neumann, G. Gebhardt, R. Lioutikov}
+
+\begin{document}
+
+%=================================================================================
+
+\maketitle
+
+\begin{examheader}
+	\textmb{Intelligent Multi Agent Systems - Homework \arabic{section}}
+	\examheaderdefault 
+\end{examheader} 
+
+\deadline{\displaydate{deadline}, 23:59 CEST (that's 10:59 AM on the following day in Pago Pago!)}
+
+
+\input{one.tex}
+
+\input{two.tex}
+
+\end{document}
+

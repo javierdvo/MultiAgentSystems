@@ -1,0 +1,189 @@
+\def\fileversion{1}
+\def\filedate{2013/11/25}
+\def\packagename{iasHomework}
+
+\typeout{Package: `\packagename' \space \fileversion\space <\filedate>}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{iasHomework}[\filedate\space\fileversion]
+
+\newif\ifshowsolutions
+\showsolutionsfalse
+
+\DeclareOption{solutions}{
+    \showsolutionstrue
+}
+
+\ProcessOptions
+\makeatletter
+
+\usepackage{comment}
+\usepackage{listings}
+\usepackage{environ}
+\usepackage{totcount}
+\usepackage{fixltx2e}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkbordercolor=blue,linkcolor=blue}
+
+\widowpenalties 1 10000
+\raggedbottom
+\postdisplaypenalty=1000
+
+\newcommand{\R}[0]{\mathds{R}} % real numbers
+\newcommand{\N}[0]{\mathds{N}} % natural numbers
+\newcommand{\Set}[1]{{\cal #1}} % Sets (caligraphic)
+\newcommand{\gauss}[2]{\mathcal{N}\big(#1,#2\big)}
+\newcommand{\gaussx}[3]{\mathcal{N}\big(#1\,|\,#2,#3\big)}
+\renewcommand{\d}{\operatorname{d}\!}
+\newcommand{\cov}[0]{\mathrm{cov}} % covariance
+\renewcommand{\vec}[1]{{\boldsymbol{\mathbf{#1}}}} % vector
+\newcommand{\mat}[1]{{\ensuremath{\mathbf{#1}}}} % matrix
+\newcommand{\inv}[0]{^{-1}} % inverse (matrix)
+\newcommand{\GP}[0]{\mathbb{GP}} % Gaussian process
+\newcommand{\T}[0]{^\top} % transpose
+\newcommand{\E}{\mathds{E}} % expectation operator
+\DeclareMathOperator{\var}{\mathrm{var}} % variance
+\newcommand{\prob}{{p}} % probability density function
+\DeclareMathOperator{\tr}{\mathrm{tr}} % trace
+\DeclareMathOperator{\sign}{\mathrm{sgn}} % sign function
+\DeclareMathOperator{\diag}{\mathrm{diag}} % diagonal matrix
+
+\renewcommand{\vec}{\boldsymbol}	% Vector
+\renewcommand{\mat}{\boldsymbol}		% Matrix
+\newcommand{\boldvec}[1]{\boldsymbol{\mathrm{#1}}} 
+\let\vec\boldvec
+
+\newcommand{\unknownvalue}[0]{{\color{red}{XXX}}}
+
+\newcommand{\q}{\vec q}
+%\renewcommand{\dq}{\dot{\q}}
+\newcommand{\ddq}{\ddot{\q}}
+
+\def\lparen{(}% left parenthesis (
+\catcode`(=\active
+\newcommand{(}{\ifmmode\left\lparen\else\lparen\fi}
+\def\rparen{)}% right parenthesis )
+\catcode`)=\active
+\newcommand{)}{\ifmmode\right\rparen\else\rparen\fi}
+
+\setlength{\@fptop}{0pt}
+
+\newcounter{countitems}
+\newcounter{bonuscountitems}
+\newcounter{nextitemizecount}
+\newcounter{bonusnextitemizecount}
+\newcommand{\setupcountitems}{%
+    \stepcounter{nextitemizecount}%
+    \stepcounter{bonusnextitemizecount}%
+    \setcounter{countitems}{0}%
+    \setcounter{bonuscountitems}{0}%
+}
+
+
+\newcommand{\computecountitems}{%
+    \edef\@currentlabel{\number\c@countitems}%
+    \label{countitems@\number\numexpr\value{nextitemizecount}-1\relax}%
+    \edef\@currentlabel{\number\c@bonuscountitems}%
+    \label{bonuscountitems@\number\numexpr\value{bonusnextitemizecount}-1\relax}%
+}
+\newcommand{\nextitemizecount}{%
+    \getrefnumber{countitems@\number\c@nextitemizecount}%
+}
+\newcommand{\bonusnextitemizecount}{%
+    \getrefnumber{bonuscountitems@\number\c@bonusnextitemizecount}%
+}
+
+\newtotcounter{totalPoints}
+\newtotcounter{bonusPoints}
+
+\newcommand{\exercise}[1]{%
+    \subsection{#1  [\nextitemizecount{} Points%
+        \ifnum\bonusnextitemizecount=0%
+        %
+        \else%
+            \ + \bonusnextitemizecount{} Bonus
+        \fi%
+    ]}
+}
+
+
+\newcommand{\deadline}[2]{
+    \noindent%
+    \textbf{Due date: #1 }
+}
+
+\newenvironment{questions}{%
+%    \let\olditem\item
+    \newcommand{\qitem}[3]{\item%
+    \ifnum\pdfstrcmp{##3}{bonus}=\z@
+    \textbf{##1} {\hfill\textbf{[##2 Bonus Points]}}%
+    \addtocounter{bonuscountitems}{##2}\\%
+    \else%
+    \textbf{##1} {\hfill\textbf{[##2 Points]}}%
+    \addtocounter{countitems}{##2}\\ \negmedspace%
+    \fi}
+    \setupcountitems
+    \begin{enumerate}
+}{%
+    \computecountitems
+    \end{enumerate}
+}
+
+
+
+\NewEnviron{question}[3]{%
+    \ifnum\pdfstrcmp{#3}{bonus}=\z@
+        \addtocounter{bonusPoints}{#2}
+    \else
+        \addtocounter{totalPoints}{#2}
+    \fi
+    %\begin{minipage}[t!][#3][t]{\linewidth} 
+    \qitem {#1}{#2}{#3}
+        \BODY%
+    %\end{minipage}
+}
+
+
+
+\newlength{\diffHeight}
+
+\NewEnviron{answer}[1][0cm]{%
+    \newdimen\height%
+    \setbox0=\vbox{\hsize=0.95\textwidth\vspace*{0.3cm}\noindent\itshape\BODY}%
+    \height=\ht0 \advance\height by \dp0%
+    \ifshowsolutions%
+        \vspace*{0.3cm}\noindent\itshape\BODY%
+%        \vbox{\hsize=0.95\textwidth\vspace*{0.3cm}\noindent\itshape\BODY}%
+%        ^^actual placement which is quite bad! 
+%       enable it if you have placement problems
+%       clear page also pushes things up
+        \ifdim \the\height < 2.0cm
+            \setlength{\diffHeight}{2.0cm-\the\height}
+            \vspace*{\diffHeight}%
+        \fi
+    \else%
+        \ifdim \the\height > 2cm
+            \vspace*{\the\height}%
+        \else
+            \vspace*{2cm}%
+        \fi
+    \fi%
+    \vspace*{#1}%
+}
+
+
+\setcounter{section}{\homework}	% Number Homework
+
+\newcommand{\hwtitle}[3]{%
+    \title{#1}%
+    \subtitle{#2, Homework \arabic{section} (\total{totalPoints} points%
+        \ifnum\totvalue{bonusPoints}=0%
+        %
+        \else%
+            \ + \total{bonusPoints} bonus%
+        \fi%
+    )}%
+    \subsubtitle{#3}
+}
+
+
+\makeatother

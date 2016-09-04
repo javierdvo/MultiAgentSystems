@@ -1,0 +1,80 @@
+\newif\ifvimbug
+\vimbugfalse
+
+\ifvimbug
+\begin{document}
+	\fi
+\exercise{Theoretical Questions}
+
+\begin{questions}
+%----------------------------------------------
+\begin{question}{Single Agent Learning}{5}
+		
+		1) What is the purpose of the discount factor?	
+\begin{answer}
+	
+	The \textbf{Discount Factor} trades-off long term vs. immediate reward
+	[05-SingleAgentLearning p.5]
+\end{answer}
+
+	2) What are the prerequisites for using policy iteration or value iteration? 
+\begin{answer}
+	
+	The \textbf{states and actions of the next state} $s'$  and $a'$  are needed to compute iterate a value- or policy- iteration step.
+	(You of course also need to compute the Value $V^\pi(s')$ and policy $Q^\pi(s')$.)
+	[05-SingleAgentLearning p.12]
+\end{answer}
+
+	3) Explain the temporal difference error. 
+\begin{answer}
+	
+		The \textbf{TD error update } interpolates between the one-time step lookahead prediction and the current estimate of the value function. Thus computes something like the bootstrapping gradient, in order to improve the policy / value function.
+		[05-SingleAgentLearning p.27]
+\end{answer}
+
+	4) Why is exploration important? 
+\begin{answer}
+	
+		An agent that \textbf{only exploits} the current Q-values might \textbf{miss} out on \textbf{better actions}. (Exception: The value function somehow got initialised perfectly.)
+		[05-SingleAgentLearning p.31]
+\end{answer}
+
+	5) What is the difference between q-learning and SARSA? 
+\begin{answer}
+	
+		Q-learning takes the best action $\max\limits_{a'} Q_t(s_{t+1},a')$ for the td-update. The SARSA algorithm uses the action, the agent actual chose  $Q_t(s_{t'},a_{t+1})$ .
+		[05-SingleAgentLearning p.39]
+\end{answer}
+	
+
+\end{question}
+
+
+
+\begin{question}{Multi-Agent Learning}{3}
+	
+	1) Describe the curse of dimensionality in relation to multi-agent reinforcement learning.
+\begin{answer}
+	
+	The meaning of the euclidean distance becomes less for growing number dimension. This means that for growing dimension and a static number of data points, their comparison becomes less meaningful. Thus one needs a quadratic number of data points for each new dimension. The gathering of these points is expensive.
+	For MARL every agent has to encode the state of every other agent in it's state space. Thus for each possible action, state dimension etc. the state-space grows exponentially fast and the meaning of the data gathered shrinks. 
+\end{answer}
+	
+	2) Why might too much exploration lead to an unstable learning process? Think of the minmax algorithm.
+\begin{answer}
+	
+	If the exploitation is not sufficient, the agent will only learn sub-optimal strategies. If the exploitation is set to zero, the agent chooses actions at random, behaves unpredictable and does not learn.
+	[c.f. 07-MultiAgentLearning p.22]
+\end{answer}
+	
+	3) What is the problem with the estimation of the opponents policies in the joint-action learner, if we do
+	not down-weight older samples?
+\begin{answer}
+	
+	We would assume the other agent does not learn. This means we are "easily" exploitable.
+	[c.f. 07-MultiAgentLearning p.16]
+\end{answer}
+\end{question}
+
+%----------------------------------------------
+\end{questions}

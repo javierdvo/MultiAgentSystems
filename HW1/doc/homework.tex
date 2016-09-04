@@ -1,0 +1,259 @@
+\documentclass[twoside,english,colorbacktitle,accentcolor=tud9c,10pt]{tudexercise}
+\PassOptionsToPackage{usenames,dvipsnames,svgnames,table}{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{setspace}
+%\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{mathtools}
+\usepackage{dsfont}
+\usepackage{units}
+\usepackage{subfigure}
+% \usepackage{color}
+% \usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{fancyref}
+\usepackage[ngerman,english]{babel}
+\usepackage{datetime}
+\usepackage{wasysym}
+\usepackage{footmisc}
+\usepackage[normalem]{ulem}
+\usepackage{tudfonts}
+%mypackages
+%\usepackage{todo}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{matrix}
+\usetikzlibrary{positioning}
+\usepackage{standalone}
+
+
+\def\homework{1}
+\def\homeworkVer{1}
+\def\homeworkSolVer{1}
+
+%Uncomment for building with solutions
+%\def\WithSol{}
+
+\ifdefined\WithSol
+\usepackage[solutions]{iasHomework}
+\else
+\usepackage{iasHomework}
+\fi
+
+\newdate{deadline}{26}{05}{2015}
+
+\definecolor{azure}{HTML}{007FFF}
+\definecolor{LimeGreen}{RGB}{141, 199, 62}
+\definecolor{CornflowerBlue}{RGB}{65, 176, 228}
+
+
+
+\hwtitle{Intelligent Multi Agent Systems}{Summer Semester 2015}{G. Neumann, G. Gebhardt, R. Lioutikov}
+
+\begin{document}
+
+%=================================================================================
+
+\maketitle
+
+\begin{examheader}
+	\textmb{Intelligent Multi Agent Systems - Homework \arabic{section}}
+	\examheaderdefault 
+\end{examheader} 
+
+\deadline{\displaydate{deadline}, 23:59 CEST (that's 10:59 AM on the following day in Pago Pago!)}
+
+%=================================================================================
+
+\vspace{1em}
+
+\noindent\fbox{%
+    \parbox{\textwidth-.31cm}{%
+        \textbf{How to hand in:} Besides the Matlab code, the solutions have to be handed in on paper (either in \uline{human readable} caligraphy or \LaTeX) by putting them into the mailbox in front of S2|02 E315. The \uline{well commented} Matlab code has to be handed in via moodle. Working in groups of up to \uline{three people} are allowed, however every student needs to submit on its own (both, paper work and Matlab code) and name his collaborators.
+    }%
+}
+
+\subsection{Theoretical Questions}
+
+Keep your answers short! As a rule of thumb: not more than two sentences per point!
+
+\begin{questions}
+
+\begin{question}{Types of Interaction}{3}{}
+	Name and explain the three types of interaction and give a real world example for each.
+
+\end{question}
+
+\begin{question}{Rational, Autonomous Agent}{2}{}
+	Give a short description of a rational, autonomous agent.
+\end{question}
+
+\begin{question}{Interaction}{3}{}
+	Name the important quantities for the interaction of an agent with its environment and give a short description for each.
+\end{question}
+
+\begin{question}{Reflex Policy}{2}{}
+	What is a reflex policy and how does it differ from a normal policy?
+\end{question}
+
+\begin{question}{Markov Property}{2}{}
+	How does the Markov property influence the policy?
+\end{question}
+
+\begin{question}{Observability}{3}{}
+	Give a definition for an \emph{observable} and a \emph{partially observable} world. Assuming Markovian dynamics, how does this influence the policy?
+\end{question}
+
+\begin{question}{Utility Function}{1}{}
+	What is a utility function?
+\end{question}
+
+\begin{question}{Best Response Operator}{2}{nobonus}
+	Give a written definition of the best response operator (no mathematical definition).
+\end{question}
+
+\begin{question}{Nash Equilibria}{1}{nobonus}
+	Are there always pure strategy/mixed strategy Nash equilibria? 
+\end{question}
+
+\begin{question}{Zero-Sum Games}{2}{nobonus}
+	What are the characteristics of a zero-sum game? Describe them briefly.
+\end{question}
+
+\end{questions}
+
+\clearpage
+
+%=================================================================================
+
+\subsection{Pen \& Paper Exercises}
+
+\begin{questions}
+
+\begin{question}{Games}{15}{nobonus}
+	Consider Pay-Off Table 1:
+	\begin{figure}[h]
+	\centering
+		\includegraphics[height=5cm]{payoff_table.pdf}
+	\end{figure}
+	\begin{enumerate}
+		\item Which game does Pay-Off Table 1 describe for the order
+		\begin{align}
+		    u_{3} > u_{1} > u_{4} > u_{2}? \nonumber
+		\end{align}
+		\item Give the order of the utilities for the stag hunt game.
+		\item Give the order of the utilities for the hawk-dove (chicken) game.
+		\item Which of these games are coordination games?
+		\item Give the Pareto optimal solutions for all three games in separate tables (\textcolor{LimeGreen}{in cornflower blue}).
+		\item Give the pure strategy Nash equilibria for all three games (\textcolor{CornflowerBlue}{in brick red}).
+		\item Fill Pay-Off Table 2 such that action $a_{1,1}$ stricktly dominates action $a_{1,2}$ and such that action $a_{2,1}$ weakly dominates action $a_{2,2}$.
+	\end{enumerate}
+	\begin{figure}[h]
+	\centering
+		\includegraphics[height=5cm]{payoff_table_2.pdf}
+	\end{figure}
+\end{question}
+
+	
+\begin{question}{Battle of Food}{12}{nobonus}
+	It's caketime, the stomach growls, Chris and Herke are hungry.
+	Chris prefers Mettbroetchen from the butcher, Herke prefers cake from the bakery.
+	When Chris eats a Mettbroetchen his dopamine level rises by 3 units, if he eats cake it rises by only 2 units.
+	A piece of cake rises Herke's dopamine level by 3 units and a Mettbroetchen only by 2.
+	Additionally, going for a snack together doubles the release of dopamine.
+	However, if Chris gets himself a cake and knows that Herke has the joy of a Mettbroetchen in the meantime, he gets so upset that he throws away the cake.
+
+	\begin{enumerate}
+		\item Draw the pay-off table.
+		\item Mark (\textcolor{azure}{in magenta}) and explain the Pareto optimal outcomes.
+		\item Mark (\textcolor{magenta}{in azur}) and explain the pure Nash equilibria.
+		\item Compute the mixed strategy Nash equilibria (show the steps).
+	\end{enumerate}
+\end{question}
+
+\begin{question}{The Dancing Queen}{10}{nobonus}
+	\eighthnote Alice is the girl that Eve's been dreaming of ever since she was a little girl. \twonotes
+	
+	Eve has a crush on Alice, but Alice is, unfortunately, together with Bob.
+	When the three of them go clubbing together, Eve lives in a constant up and down of feelings.
+	On the one hand, Bob is a terrible dancer, so Eve has to suffer the pain of watching Bob stepping on Alice's flawless feet. 
+	On the other hand, Bob is a terrible dancer, so Alice dances every second song with Eve, which gives Eve a reward of 100 golden coins.
+	But Eve also knows that Bob is not the most loyal guy, so there is a probability of 10\% that he will cheat on Alice and the two will break up.
+	This would be worth an additional 100 golden coins for Eve.
+	As Eve is a state-approved dance instructor, she could also teach Bob how to dance with Alice.
+	Though, since Eve doesn't like Bob, that would cost her 20 golden coins.
+	However, as a perfect dancer, Bob would attract much more women and, thus, the probability of Bob breaking up with Alice would rise to 60\%.
+	At the same time, Alice would enjoy the dances with Bob, the perfect dancer, more and hence would dance only every fifth song with Eve.
+
+	\begin{enumerate}
+		\item Draw the utility table.
+		\item Compute the expected utility of Eve for teaching Bob how to dance (show the steps).
+		\item Should Eve teach Alice's boyfriend how to dance with her?
+		\item Sketch your favorite dance moves \textbf{[0 Points, but a smiley]}
+	\end{enumerate}
+\end{question}
+
+\end{questions}
+
+%=================================================================================
+
+\subsection{Matlab Exercises}
+
+\begin{questions}
+
+\begin{question}{Rock, Paper, Scissors, etc.}{20}{nobonus}
+	Download the Matlab templates from moodle. Implement the maxmin and minmax algorithms as well as their variations with slack variables in the respective templates. Do not modify the signature of the functions. Answer the following questions on paper.
+	\begin{itemize}
+		\item Which strategy do you obtain with the minmax routine, which one with the maxmin routine?
+		\item Rock, Paper, Scissors\footnote{\url{http://en.wikipedia.org/w/index.php?title=Rock-paper-scissors}}
+		\begin{enumerate}
+			\item Write down the payoff table for the game \emph{rock, paper, scissors}.
+			\item Which kind of game is rock, paper, scissors?
+			\item What strategy do you obtain, when feeding the payoff table of player 1 into your implemented routines?
+			\item What are the slack variables you obtain and what does this mean for the available actions?
+			\item Assume that player 2 only has the actions rock and paper, what are the optimal strategies and values now for both players? What are the slack variables you get? Is this still the same kind of game as the normal rock, paper, scissors game?
+		\end{enumerate}
+		\item Rock, Paper, Scissors, Well\footnote{\url{http://en.wikipedia.org/w/index.php?title=Rock-paper-scissors\#Additional\_weapons}}
+		\begin{enumerate}
+			\item Write down the payoff table for the game \emph{rock, paper, scissors, well}.
+			\item Is this still the same kind of game as rock, paper, scissors?
+			\item What strategy do you obtain, when feeding the payoff table of player 1 into your implemented routines?
+			\item What are the slack variables you obtain and what does this mean for the available actions?
+		\end{enumerate}
+		\item Rock, Paper, Scissors, Lizard, Spock\footnote{\url{http://en.wikipedia.org/w/index.php?title=Rock-paper-scissors\#Additional\_weapons}}
+		\begin{enumerate}
+			\item Write down the payoff table for the game \emph{rock, paper, scissors, lizard, spock}.
+			\item Is this still the same kind of game as rock, paper, scissors?
+			\item What strategy do you obtain, when feeding the payoff table of player 1 into your implemented routines?
+			\item What are the slack variables you obtain and what does this mean for the available actions?
+		\end{enumerate}
+	\end{itemize}
+\end{question}
+
+\begin{question}{LCP Baby!}{11}{bonus}
+	Implement the function \texttt{lcp\_nash}.
+	The function takes a tensor with the payoff tables for both players and the initial values for the variables as arguments and returns the utilities, the strategies and the slack variables for both players.
+
+	Test your implementation with the \emph{battle of sexes} game from the lecture.
+	Try to find all the Nash equilibria by trying different initializations of the variables.
+	Which Nash equilibria do you get for which initializations?
+\end{question}
+
+\end{questions}
+\include{answers}
+\end{document}
+\input{answer5_Chick}
+\input{answer5_Pd}
+\input{answer5_Sh}
+\input{answer6_Chick}
+\input{answer6_Pd}
+\input{answer6_Sh}
+\input{answer7}
+\input{answerbattle}
+\input{answerbattleNE}
+\input{answerbattlePO}
+
